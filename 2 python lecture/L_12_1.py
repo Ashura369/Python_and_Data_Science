@@ -44,7 +44,7 @@ p1.welcome()    # [here welcome is being called within the p1 object]
 p1.print_data()
 p2.print_data()
 
-p1.relationship1()
 p2.relationship2(p1)
+p1.relationship1()
 
 

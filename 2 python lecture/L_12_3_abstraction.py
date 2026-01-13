@@ -1,5 +1,5 @@
 """
-abstraction -- hinding the implementation details of a class and only showing the essential features to the user
+abstraction -- hiding the implementation details of a class and only showing the essential features to the user
 
 """
 
@@ -14,6 +14,7 @@ class Car:
         self.clutch = True
         self.acc = True         # here we hind the details for clutch and acc while printing, bcoz it was not needed to. And we only showed the printing statement
         print('CAR STARTED')
+        # print(self.clutch, self.acc)      # uncomment this line and run this code
 
 
 c1=Car()

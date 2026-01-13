@@ -14,7 +14,7 @@ class Facebook:
             3. Anything else to leave
                            
 """)
-
+        
         if user_input == "1":
             self.register()
         elif user_input == "2":
