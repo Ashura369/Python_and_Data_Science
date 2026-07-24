@@ -1,4 +1,4 @@
-{% extends "base.html" %}           <!--links the current html to the base html-->
+A{% extends "base.html" %}           <!--links the current html to the base html-->
 
 {% block title %}Login - Profile system{% endblock %}
 
@@ -6,7 +6,7 @@
 <div class="login-page">
     <h1>ENTER YOUR DETAILS</h1>
 
-    <form action="/submit" method="POST" class="form">
+    <form action="/submit" method="POST" class="form">      <!--Here 'action' represents where to send the form data-->
         <label>Username</label>
         <input type="text" name="username" placeholder="Enter Name" class="details username">
         
