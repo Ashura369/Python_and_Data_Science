@@ -31,7 +31,7 @@ def submit():
     admin_html = f"<h2>Hello {user_name}</h2>"
 
     if user_name in admins['name'] and user_email in admins['email']:
-        return render_template('3_page.html', name=user_name, email=user_email)
+        return render_template('3_admin_previlage_page.html', name=user_name, email=user_email)
     elif user_name and user_email:
         return render_template('3_page.html', name=user_name, email=user_email)
     else:

@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>Hii {{name}}</h3>
-    
+    <h1>Hello {{ name }}</h1>
+    <label>Your email is {{ email }}</label><br><br>
+
     <!-- making a button to jump to the welcome page -->
-    <a href="{{url_for('welcome')}}">
+    <a href="{{ url_for('welcome') }}">
         <input type="submit" value="Jump to Welcome Page">
     </a>
 </body>
