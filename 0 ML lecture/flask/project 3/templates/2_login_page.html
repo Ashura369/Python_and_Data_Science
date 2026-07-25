@@ -7,27 +7,31 @@
     <title>Document</title>
 </head>
 <body>
-    <form class="login_form">
+    <form class="login_form" action="/submit" method="POST">
         <div>
         <label>Username : </label>
-        <input type="text" placeholder="enter name" >
+        <input type="text" placeholder="enter name" name="username" required>
         </div>
 
         <div>
         <label>Email : </label>
-        <input type="text" placeholder="enter email">
+        <input type="text" placeholder="enter email" name="email" required>
         </div>
 
         <div>
         <label>Phone no. : </label>
-        <input type="tel" placeholder="enter phone no.">
+        <input type="tel" placeholder="enter phone no." name="phone" required>
         </div>
 
         <div>
         <label>Password : </label>
-        <input type="password" placeholder="enter password">
+        <input type="password" placeholder="enter password" name="password" reqired>
         </div>
 
+        <!-- adding submit button -->
+        <div>
+            <input type="submit" value="submit">
+        </div>
     </form>
 </body>
 </html>
