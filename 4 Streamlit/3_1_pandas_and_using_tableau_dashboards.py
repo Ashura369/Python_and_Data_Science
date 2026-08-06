@@ -58,20 +58,33 @@ selection = st.selectbox('Select the Tableau Presentation', options=type, index=
 
 left, center, right = st.columns([1,15,1])
 
+@st.dialog("Tableau Dashboard", width='large')
+def show_popup(embed):
+    components.html(embed, height=1000, scrolling=True)
+
 if selection == 'Centralized Visualisation of Existing Problems':
     embed_code_1 = st.secrets["Centralized_Visualisation_of_Existing_Problems"]   
     with center: 
-        components.html(embed_code_1, height=900, scrolling=True)
+        components.html(embed_code_1, height=800, scrolling=True)
+
+        if st.button("Maximize", key="max_1"):                                                                   # making the maximize button
+            show_popup(embed_code_1)
 
 elif selection == 'Performance, Quality, and Error Analysis':
     embed_code_2 = st.secrets["Performance_Quality_and_Error_Analysis"]
     with center:
-        components.html(embed_code_2, height=900, scrolling=True)
+        components.html(embed_code_2, height=800, scrolling=True)
+
+        if st.button("Maximize", key="max_2"):
+            show_popup(embed_code_2)
 
 elif selection == 'Efficiency Status and Cross-Metrics Diagnostics':
     embed_code_3 = st.secrets['Efficiency_Status_and_Cross_Metrics_Diagnostics']
     with center:
-        components.html(embed_code_3, height=900, scrolling=True)
+        components.html(embed_code_3, height=800, scrolling=True)
+
+        if st.button("Maximize", key="max_3"):
+            show_popup(embed_code_3)
 
 
 
@@ -83,11 +96,17 @@ tableau_embed_code = "<div class='tableauPlaceholder' id='viz1786030957325' styl
 # putting the tableau presentation at the center of the webpage
 # Creingat 3 columns. The middle one is 4x wider than the side ones!
 # [1, 4, 1] means: Small Left Column, HUGE Middle Column, Small Right Column
-left_spacer, center_column, right_spacer = st.columns([1, 15 , 1])
+left_spacer, center_column, right_spacer = st.columns([1, 15, 1])
+
+@st.dialog("Tableau Dashboard", width='large')
+def show_popup2():
+        components.html(tableau_embed_code, height=895, scrolling=False)
 
 with center_column:
-    components.html(tableau_embed_code, height=900, scrolling=True)
+    components.html(tableau_embed_code, height=775, scrolling=False)                # REMEMBER to keep the height at 775, if you increase the height more than this, then the tableau toolbar will be shown, which contains the download button for the dashboard being presented. Height is kept at 775 to hide the download section for privacy reasons.
 
+    if st.button("Maximize", key="max_4"):
+        show_popup2()
 
 # -------------------------------------------------------------------
 
