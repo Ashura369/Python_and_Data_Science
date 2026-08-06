@@ -1,0 +1,1 @@
+.streamlit/secrets.toml             # this one prevents uploading secrect tableau dashboards to the github, so that only the dashboard will be shown
