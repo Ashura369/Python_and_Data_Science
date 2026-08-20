@@ -38,8 +38,11 @@ if file_exist is not None:
         st.write("Describing the Dataset")
         st.dataframe(df.describe())
     with col2:
-        st.write("Checking for Datatypes")
-        st.dataframe(df.dtypes)
+        dtypes = ['int','float','object']
+        dtypes_selected = st.multiselect('Select Datatype', options=dtypes, default=[])
+        if dtypes_selected:
+            st.write("Checking for Datatypes")
+            st.dataframe(df.select_dtypes(include=dtypes_selected))
 
     # -------------------------------------------------------------------
 
