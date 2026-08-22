@@ -3,7 +3,6 @@ import sys
 from streamlit.web.cli import main
 from streamlit.web import cli as stcli
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
@@ -16,7 +15,17 @@ st.title("Plotting in Streamlit")
 df = pd.read_csv("Final Visualization Dataset.csv")
 
 st.button('Refresh')
-st.dataframe(df.sample(10))
+st.dataframe(df.sample(5))
+# -------------------------------------------------------------------------------------------------
+
+# showing columns with different datatypes
+label_dtype = ['int','float','object']
+btn_dtype = st.multiselect('Select Data Type', options=label_dtype)
+if btn_dtype:
+    st.write(f"No. of Columns : {len(df.select_dtypes(include=btn_dtype).columns)}")
+    st.write(", ".join(df.select_dtypes(include=btn_dtype).columns))
+    st.dataframe(df.select_dtypes(include=btn_dtype).head(5))
+
 
 # -------------------------------------------------------------------------------------------------
 
@@ -27,13 +36,37 @@ st.dataframe(df.sample(10))
 # st.pyplot(fig)
 
 # -------------------------------------------------------------------------------------------------
-
 # making plotly plots
-st.write("Plotly Plots")
-fig = px.histogram(df, x='Compensation Rate')
+
+# histogram
+st.subheader("Plotly Histogram Plot")
+
+# plot 1
+fig = px.histogram(df, x='Compensation Rate', color='Gender',
+                    color_discrete_map={'Male' : 'Red', 'Female' : 'Blue'}
+                   )
 fig.update_traces(marker_line_color='black', marker_line_width=1)
+fig.update_layout(bargap=0.2, title='Histogram for Compentation Rate', xaxis_title='Compentation Rate', yaxis_title='Count')
+st.plotly_chart(fig)
+st.write()
+
+# plot 2
+fig = px.histogram(df, y='Hourly Rate', x='Job Role', color_discrete_sequence=['blue'], 
+                   title='Hourly Rate at Different Job Roles for Male and Females', 
+                   text_auto=True,
+                   facet_col='Gender'
+                   )
+fig.update_traces(marker_line_color='black', marker_line_width=1, textposition='outside')
 st.plotly_chart(fig)
 
+# plot 3
+fig = px.pie(df, names='Attrition', color='Attrition', 
+            color_discrete_map={0:'Green', 1:'Red'}, 
+            title='Travel Type Affecting Attrition',
+            facet_col='Business Travel'
+)
+fig.update_traces(marker=dict(line=dict(color='white', width=3)))
+st.plotly_chart(fig)
 
 
 
