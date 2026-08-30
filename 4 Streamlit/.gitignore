@@ -1,2 +1,7 @@
 # this one prevents uploading secrect tableau dashboards to the github, so that only the dashboard will be shown
 .streamlit/secrets.toml
+
+# Ignore video files and video folders
+*.mp4
+open cv/vids/
+vids/
