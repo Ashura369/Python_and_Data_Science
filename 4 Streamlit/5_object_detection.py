@@ -13,6 +13,27 @@ import tempfile                             # for video preprocessing
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 st.set_page_config('objDetection', layout='wide')
 
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CREDIT SECTION
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+st.markdown(
+    """
+    <div style='display: flex; justify-content: flex-end; align-items: center; margin-bottom: 5px;'>
+        <b style='margin-right: 15px; font-size: 16px;'>Credits : </b>
+        <a href='https://github.com/pradhans369' target='_blank'>
+            <img src='https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white' style='margin-right: 10px;'>
+        </a>
+        <a href='https://www.linkedin.com/in/pradhans369/' target='_blank'>
+            <img src='https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white'>
+        </a>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+
+
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # HEADINGS
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +95,7 @@ if button == 'Image':
         else:
             with btn_sec2:
                 st.info("Snap a photo on the left to see detections here")
+
     elif img_btn == 'Upload image':
         with btn_sec1:
             st.write("Select image from files")
@@ -118,13 +140,17 @@ elif button == 'Recorded Video':
             tfile.write(rec_vid.read())
             tfile.close()                   # closing the file so 'OpenCV' can read it
 
-            if st.button('Generate'):
+            col1, col2 = st.columns([1,1])
+            with col1:
+                generate = st.button('Generate')
+
+            if generate:
                 cap = cv.VideoCapture(tfile.name)
 
                 width = int(cap.get(cv.CAP_PROP_FRAME_WIDTH))
                 height = int(cap.get(cv.CAP_PROP_FRAME_HEIGHT))
                 total_frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT)) or 100
-                fps = 30
+                fps = int(cap.get(cv.CAP_PROP_FPS)) or 30
 
                 out_tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
                 fourcc = cv.VideoWriter_fourcc(*'mp4v')
@@ -160,64 +186,48 @@ elif button == 'Recorded Video':
                 out.release()
                 st.toast('Video processing complete !!!')
 
-                # making a download button for the generated video
-                with open(out_tfile.name, 'rb') as f:
-                    video_bytes = f.read()
+                with col2:
+                    # making a download button for the generated video
+                    with open(out_tfile.name, 'rb') as f:
+                        video_bytes = f.read()
 
-                st.download_button(
-                    label='Download',
-                    data=video_bytes,
-                    file_name="yolo_detected_video.mp4",
-                    mime="video/mp4"
-                )
+                    st.download_button(
+                        label='Download',
+                        data=video_bytes,
+                        file_name="yolo_detected_video.mp4",
+                        mime="video/mp4"
+                    )
         else:
             st.info('Upload a video file to see object detection')
 
-        # make the download button available
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 'LIVE WEB CAM' BUTTON
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+elif button == 'Live webcam':
+    
+    cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+    cam_feed = st.empty()
 
+    while True:
+        ret, frames = cap.read()
+        if not ret:
+            st.subheader("ERROR")
+            break
 
+        # frames = cv.flip(frames, 1)
+        results = model(frames)
+        vid_rgb = cv.cvtColor(results[0].plot(), cv.COLOR_BGR2RGB)
+        cam_feed.image(vid_rgb, use_container_width=True)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    cap.release()
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 if __name__ == "__main__":
     if st.runtime.exists():
