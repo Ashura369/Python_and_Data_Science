@@ -1,19 +1,12 @@
+letters = ['a', 'x', 'h', 'm', 'g', 'z', 'b']
 
 
-a = 19
+letter_1 = letters.index('h')
+letter_2 = letters.index('g')
 
-
-while a > 0:
-    n = a % 10
-    print(n)
-    a //= 10
-
-
-
-
-
-
-
-
+if letter_1 < letter_2:
+    print(True)
+else:
+    print(False)
 
 
