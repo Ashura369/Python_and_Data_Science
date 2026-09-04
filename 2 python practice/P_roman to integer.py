@@ -20,7 +20,7 @@
 
 def romanToInt(s):
     temp = {
-        'I' : 1,
+        'I':1,
         'V':5,
         'X':10,
         'L':50,
@@ -29,13 +29,27 @@ def romanToInt(s):
         'M':1000
     }
 
+    
+    nums = [temp[i.upper()] for i in s if i.upper() in temp]
+    total = 0
 
-    for i in range(0, len(s)):
+    if not nums:
+        return 0
+
+    for i in range(len(nums)-1):
+        if nums[i] >= nums[i+1]:
+            total += nums[i]
+        else:
+            total -= nums[i]
         
+    total += nums[-1]
 
-romanToInt('hello')
+    return total
 
-# print(romanToInt("IV"))
+print(romanToInt('vi'))
+print(romanToInt('iv'))
+
+
 
 
 

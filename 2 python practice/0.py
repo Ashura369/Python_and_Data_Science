@@ -1,12 +1,4 @@
-letters = ['a', 'x', 'h', 'm', 'g', 'z', 'b']
+a = [1,2,5,8,4,6]
 
-
-letter_1 = letters.index('h')
-letter_2 = letters.index('g')
-
-if letter_1 < letter_2:
-    print(True)
-else:
-    print(False)
-
-
+for i in range(len(a)-1):
+    print(a[i])
